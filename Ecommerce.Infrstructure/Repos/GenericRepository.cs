@@ -22,7 +22,7 @@ namespace Ecommerce.Infrstructure.Repos
             await dbSet.AddAsync(Entity);
         }
 
-        public async Task<TEntity> FindAsync<TKey>(TKey ID, string includeProperties = "")
+        public async Task<TEntity> GetById(int ID, string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
          
@@ -32,10 +32,10 @@ namespace Ecommerce.Infrstructure.Repos
                 query = query.Include(includeProperty);
             }
 
-            return await query.FirstOrDefaultAsync(entity => EF.Property<TKey>(entity, "Id").Equals(ID));
+            return await query.FirstOrDefaultAsync(entity => EF.Property<int>(entity, "Id").Equals(ID));
         }
 
-        public async Task<IEnumerable<TEntity>> Get(
+        public async Task<IEnumerable<TEntity>> GetAllAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
@@ -82,74 +82,13 @@ namespace Ecommerce.Infrstructure.Repos
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync<TKey>(TKey ID)
+        public Task DeleteAsync(int ID)
         {
             TEntity entityToDelete = dbSet.Find(ID);
+            
             dbSet.Remove(entityToDelete);
 
             return Task.CompletedTask; 
         }
     }
 }
-
-
-
-/*
-        public async Task AddAsync(T Entity)
-        {
-            await _context.Set<T>().AddAsync(Entity);            
-        }
-
-        public async Task DeleteAsync(T ID)
-        {
-            var entity = await _context.Set<T>().FindAsync(ID);
-            
-            if(entity!=null)
-                _context.Set<T>().Remove(entity);
-        }
-
-        public async Task<IReadOnlyList<T>> GetAllAsync() => 
-          await  _context.Set<T>().AsNoTracking().ToListAsync();
-
-        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] Includes)
-        {
-            IQueryable<T> query = _context.Set<T>().AsQueryable();
-
-            //applay all Includes
-
-            foreach (var item in Includes)
-            {
-                query  = query.Include(item);   
-            }
-
-            return await query.ToListAsync(); 
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(Func<T,bool> predecate, params Expression<Func<T, object>>[] Includes)
-        {
-            IQueryable<T> query = _context.Set<T>().Where(predecate).AsQueryable();
-
-            //applay all Includes
-
-            foreach (var item in Includes)
-            {
-                query = query.Include(item);
-            }
-
-            return await query.ToListAsync();
-        }
-
-
-        public async Task<T> GetAsync(T ID)=> await _context.Set<T>().FindAsync(ID);
-       
-        public async Task UpdateAsync(T ID, T Entity)
-        {
-            var entity = await _context.Set<T>().FindAsync(ID);
-            
-            if (entity != null)
-            {
-                _context.Set<T>().Update(entity);
-            }
-        }
-
-*/

@@ -8,14 +8,14 @@ namespace Ecommerce.Infrstructure
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        public ICategoreyRepository CategoreyRepository { get; }
+        public ICategoryRepository CategoreyRepository { get; }
 
         public IProductrRepository ProductrRepository { get; }
 
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
-            
+
             CategoreyRepository = new CategoreyRepository(context);
             
             ProductrRepository = new ProductRepository(context);

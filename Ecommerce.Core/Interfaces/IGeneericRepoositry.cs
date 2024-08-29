@@ -6,9 +6,9 @@ namespace Ecommerce.Core.Interfaces
     {
         public Task AddAsync(TEntity Entity);
         
-        public Task<TEntity> FindAsync<TKey>(TKey ID, string includeProperties = "");
+        public Task<TEntity> GetById(int ID, string includeProperties = "");
 
-        public Task<IEnumerable<TEntity>> Get(
+        public Task<IEnumerable<TEntity>> GetAllAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = ""); 
@@ -16,8 +16,9 @@ namespace Ecommerce.Core.Interfaces
        
         public Task UpdateAsync(TEntity Entity);
         
-        public Task DeleteAsync<TKey>(TKey ID);
+        public Task DeleteAsync(int ID);
 
-        public Task DeleteAsync(TEntity entityToDelete); 
+        public Task DeleteAsync(TEntity entityToDelete);
+
     }
 }
