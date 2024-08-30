@@ -6,52 +6,21 @@ namespace Ecommerce.Api.Dtos
     public class CategoreyDTO
     {
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Id must be greater than 0.")]
+        public int Id { get; set; } 
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
 
-
-        public static explicit operator CategoreyDTO (Category category)
-        {
-            return new CategoreyDTO
-            {
-                Name = category.Name,
-                Description = category.Description,
-            };
-        }
     }
 
-
-
-    public class ListingCategoreyDTO : CategoreyDTO
+    public class CreateCategoryDTO
     {
-         public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        public static ListingCategoreyDTO FromModel(Category category)
-        {
-            return new ListingCategoreyDTO
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description
-            };
-        }
+        [Required]
+        public string Description { get; set; }
     }
-
-
-    public class UpdatedCategoreyDTO : CategoreyDTO
-    {
-        public int Id { get; set; }
-
-        public Category ToModel()
-        {
-            return new Category
-            {
-                Id = this.Id,
-                Name = this.Name,
-                Description = this.Description
-            };
-        }
-    }
-
-
 }

@@ -1,10 +1,14 @@
 using Ecommerce.Infrstructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 //Configuer Infrastrucuer Layer  
-builder.Services.InfrastructuerConfiguration(builder.Configuration); 
+builder.Services.InfrastructuerConfiguration(builder.Configuration);
+
+//Configuer Mapper
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

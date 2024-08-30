@@ -32,7 +32,7 @@ namespace Ecommerce.Infrstructure.Repos
                 query = query.Include(includeProperty);
             }
 
-            return await query.FirstOrDefaultAsync(entity => EF.Property<int>(entity, "Id").Equals(ID));
+            return await query.AsNoTracking().FirstOrDefaultAsync(entity => EF.Property<int>(entity, "Id").Equals(ID));
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(
