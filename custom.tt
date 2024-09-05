@@ -1,0 +1,6 @@
+<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+using System;
+public class <#= DateTime.Now.Year #>GeneratedClass {
+    public string Message => "This is a generated class!";
+}

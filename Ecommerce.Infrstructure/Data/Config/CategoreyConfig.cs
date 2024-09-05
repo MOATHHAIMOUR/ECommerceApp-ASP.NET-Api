@@ -1,4 +1,4 @@
-﻿using Ecommerce.Core.Entites;
+﻿using Ecommerce.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Ecommerce.Infrstructure.Data.Config

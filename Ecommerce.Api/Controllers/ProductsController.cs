@@ -1,67 +1,71 @@
-﻿using AutoMapper;
-using Ecommerce.Api.Dtos;
-using Ecommerce.Core;
-using Ecommerce.Core.Entites;
+﻿using Ecommerce.Api.Base;
+using Ecommerce.Application.Featuers.ProductFeatuer.Command.AddProduct;
+using Ecommerce.Application.Featuers.ProductFeatuer.Command.DeleteProductById;
+using Ecommerce.Application.Featuers.ProductFeatuer.Command.UpdateProductById;
+using Ecommerce.Application.Featuers.ProductFeatuer.Queries.GetProductById;
+using Ecommerce.Domain.AppMetaData;
+using Ecommerce.Domain.Featuers.ProductFeatuer.Queries.GetProductList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : AppController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            this._unitOfWork = unitOfWork;
-            this._mapper = mapper;
-        }
-
-
-        [HttpGet]
+        [HttpGet(Routre.StudentRouting.List)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> GetAllProduct()
+        public async Task<IActionResult> GetProductList()
         {
-            var Products = await _unitOfWork.ProductrRepository
-                .GetAllAsync(null,null,"Category");
+            var response = await Mediator.Send(new GetProductListQuery());
 
-            if (Products == null || !Products.Any())
-                return NotFound();
-
-            //mapping to Product DTO 
-            var Productstos = Products.Select(p =>
-            {
-                return new ProductDTO
-                {
-                    Id = p.Id,  
-                    Name = p.Name,
-                    CategoryName = p.Category.Name,
-                    Description = p.Description,
-                    Price = p.Price 
-                };
-            });
-
-            return Ok(Productstos);
+            return NewResult(response);
         }
 
-/*
-        [HttpGet]
-        [Route("{Id}")]
-        public async Task<ActionResult<Product>> GetProductById(int Id)
+
+        [HttpGet(Routre.StudentRouting.GetById)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetProductByID([FromRoute] int Id)
         {
-            Product ptoduct = await unitOfWork.ProductrRepository
-                .GetById(Id);
+            var response = await Mediator.Send(new GetProductByIdQuery(Id));
 
-            if(ptoduct is null)
-                return NotFound($"Product with Id: {Id} is Not Found !");
-
-            
+            return NewResult(response);
         }
-*/
 
 
+        [HttpPost(Routre.StudentRouting.Create)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> Create([FromBody] AddProductCommand command)
+        {
+            var response = await Mediator.Send(command);
+
+            return NewResult(response);
+        }
+
+        [HttpPut(Routre.StudentRouting.Update)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> Update([FromBody] UpdateProductByIdCommand command)
+        {
+            var response = await Mediator.Send(command);
+
+            return NewResult(response);
+        }
+
+        [HttpDelete(Routre.StudentRouting.Delete)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete([FromRoute] DeleteProductByIdCommand command)
+        {
+            var response = await Mediator.Send(command);
+
+            return NewResult(response);
+        }
     }
 }

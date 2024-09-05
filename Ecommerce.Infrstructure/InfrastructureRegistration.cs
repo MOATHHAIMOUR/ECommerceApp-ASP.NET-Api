@@ -1,31 +1,56 @@
-﻿using Ecommerce.Core;
-using Ecommerce.Core.Interfaces;
-using Ecommerce.Infrstructure.Data;
-using Ecommerce.Infrstructure.Repos;
+﻿using Ecommerce.Infrstructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ecommerce.Domain.Entites;
+using Ecommerce.Domain.IRepositories.Base;
+using Ecommerce.Infrastructure.Repos.Base;
+using Ecommerce.Domain.IRepositories;
+using Ecommerce.Infrstructure.RepositroryImplemntation;
 
 namespace Ecommerce.Infrstructure
 {
     public static class InfrastructureRegistration
     {
-        public static IServiceCollection InfrastructuerConfiguration(this IServiceCollection services
+        public static IServiceCollection InfrastructureConfiguration(this IServiceCollection services
             ,IConfiguration configuration) 
         {
-            services.AddScoped(typeof(IGeneericRepoositry<>), typeof(GenericRepository<>));
-
-            /* services.AddScoped<ICategoreyRepository, CategoreyRepository>();
-
-             services.AddScoped<IProductrRepository, ProductRepository>();*/
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
+           
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("SQLServer")); 
+                options.UseSqlServer(configuration.GetConnectionString("SQLServer"));
             });
+
+
+           services.AddIdentity<User,IdentityRole<int>>(option =>
+            {
+                // Password settings.
+                option.Password.RequireDigit = true;
+                option.Password.RequireLowercase = true;
+                option.Password.RequireNonAlphanumeric = true;
+                option.Password.RequireUppercase = true;
+                option.Password.RequiredLength = 6;
+                option.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                option.Lockout.MaxFailedAccessAttempts = 5;
+                option.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                option.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                option.User.RequireUniqueEmail = true;
+                option.SignIn.RequireConfirmedEmail = false;
+
+            })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(IGeneericRepoositry<>), typeof(GenericRepository<>));
+
+            services.AddScoped(typeof(IProductrRepository), typeof(ProductRepository));
 
             return services; 
         }

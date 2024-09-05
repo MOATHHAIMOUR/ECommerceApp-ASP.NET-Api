@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Ecommerce.Api.Dtos;
-using Ecommerce.Core;
-using Ecommerce.Core.Entites;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 
 namespace Ecommerce.Api.Controllers
@@ -11,29 +7,38 @@ namespace Ecommerce.Api.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IMapper _mapper; 
 
 
-        public CategoriesController(IUnitOfWork unitOfWork, IMapper _mapper)
+
+
+
+
+
+
+
+
+
+
+
+
+       /* private readonly ICategoryServices _categoryService;
+
+        public CategoriesController(ICategoryServices categoryService)
         {
-            this.unitOfWork = unitOfWork;
-            this._mapper = _mapper; 
+            _categoryService = categoryService;
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<CategoreyDTO>>> GetAllCategories()
         {
-            var allCategories = await unitOfWork.CategoreyRepository.GetAllAsync();
+            var categoriesDto = await _categoryService.GetAllCategoreis();
 
-            if (allCategories == null || !allCategories.Any())
+            if (!categoriesDto.Any())
                 return NotFound("No categories found.");
 
-            var categoreyDTOs = _mapper.Map<IEnumerable<CategoreyDTO>>(allCategories); 
-
-            return Ok(categoreyDTOs);  
+            return Ok(categoriesDto);
         }
 
 
@@ -43,12 +48,10 @@ namespace Ecommerce.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CategoreyDTO>> GetCategoryById(int Id)
         {
-            var Category = await unitOfWork.CategoreyRepository.GetById(Id);
+            var CategoryDTO = await _categoryService.GetCategoreyById(Id);
 
-            if (Category is null)
+            if (CategoryDTO == null)
                 return NotFound($"No Categorey with ID: {Id} Found!");
-
-            var CategoryDTO = _mapper.Map<CategoreyDTO>(Category);
             
             return Ok(CategoryDTO);
         }
@@ -59,30 +62,17 @@ namespace Ecommerce.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> AddCategorey([FromBody] CreateCategoryDTO CreateCategoryDTO)
+        public async Task<ActionResult> AddCategorey([FromBody] CategoryToAddDTO CreateCategoryDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Category Data Not Valied");
-            try
-            {
 
-                var newCategorey = _mapper.Map<Category>(CreateCategoryDTO); 
-                
-                await unitOfWork.CategoreyRepository.AddAsync(newCategorey);
+            bool isAdded = await _categoryService.CreateCategorey(CreateCategoryDTO);
 
-                var result = await unitOfWork.CommitAsync();
-
-                if (result > 0)
-                    return Ok("Category saved successfully.");
-                else
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Category could not be saved.");
-            }
-            catch (Exception ex) 
-            {
-                // Log the exception details for further investigation (using a logging framework like Serilog, NLog, etc.)
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while saving the category.");
-            }
-
+              if (isAdded)
+                   return Ok("Category saved successfully.");
+              else
+                   return BadRequest("Category Data Not Valied");
         }
 
 
@@ -92,36 +82,18 @@ namespace Ecommerce.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> UpdateCategorey([FromBody] CategoreyDTO CategoreyDTO)
+        public async Task<ActionResult> UpdateCategorey([FromBody] CategoryToUpdateDTO categoryToUpdateDTO)
         {
+
             if (!ModelState.IsValid)
                 return BadRequest("Category Data Not Valied");
 
-            try
-            {
-                var Categorey = await unitOfWork.CategoreyRepository.GetById(CategoreyDTO.Id);
+            bool isUpdated = await _categoryService.UpdateCategorey(categoryToUpdateDTO);
 
-                if (Categorey == null)
-                    return NotFound($"No Categorey with ID: {CategoreyDTO.Id} Found!");
-
-                // Update the existing category with new values
-                var updatedCategorey = _mapper.Map<Category>(CategoreyDTO); 
-
-                await unitOfWork.CategoreyRepository.UpdateAsync(updatedCategorey);
-
-                var result = await unitOfWork.CommitAsync();
-
-                if (result > 0)
-                    return Ok("Category updated successfully.");
-                else
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Category could not be saved.");
-
-            }
-            catch(Exception ex)
-            {
-                // Log the exception details for further investigation (using a logging framework like Serilog, NLog, etc.)
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while saving the category. {ex.Message}");
-            }
+            if (isUpdated)
+                return Ok("Category saved successfully.");
+            else
+                return BadRequest("Category Data Not Valied");
 
         }
 
@@ -132,35 +104,22 @@ namespace Ecommerce.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteCategorey(int Id)
         {
             if (Id <= 0)
                 return BadRequest("Id Not Valied");
 
-            try
-            {
-                var category = await unitOfWork.CategoreyRepository.GetById(Id);
+            if(!(await _categoryService.IsCategoreyExist(Id)))
+                return NotFound("Product is not found");  
 
-                if (category == null)
-                    return NotFound($"Category with ID: {Id} not found.");
 
-                await unitOfWork.CategoreyRepository.DeleteAsync(Id); 
+            bool isDeleted = await _categoryService.DeleteCategorey(Id);
 
-                var result = await unitOfWork.CommitAsync();
+            if (isDeleted)
+                return Ok("Category Deleted successfully.");
+            else
+                return BadRequest("Category Data Not Valied");
 
-                if (result > 0)
-                    return Ok("Category Deleted successfully.");
-                else
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Category could not be saved.");
-
-            }
-            catch (Exception ex)
-            {
-                // Log the exception details for further investigation (using a logging framework like Serilog, NLog, etc.)
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while saving the category. {ex.Message}");
-            }
-
-        }
+        }*/
     }
 }
