@@ -1,5 +1,7 @@
 ﻿using Ecommerce.Domain.Entites;
 using Ecommerce.Domain.IRepositories;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Ecommerce.Application.Services.ProductServices
 {
@@ -14,9 +16,16 @@ namespace Ecommerce.Application.Services.ProductServices
             _productrRepository = productrRepository;
         }
 
-        public IQueryable<Product> GetAllProducts()
+        public IQueryable<Product> GetAllProductsAsQurable(params Expression<Func<Product, object>>[] Includes)
         {
-            return _productrRepository.GetTableNoTracking(include => include.Category);
+            IQueryable<Product> query = _productrRepository.GetTableNoTracking();
+
+            foreach (var include in Includes)
+            {
+                query = query.Include(include);
+            }
+
+            return query;
         }
 
         public IQueryable<Product> GetProductById(int Id)
@@ -45,5 +54,7 @@ namespace Ecommerce.Application.Services.ProductServices
         {
             return await _productrRepository.DeleteAsync(product);
         }
+
+
     }
 }

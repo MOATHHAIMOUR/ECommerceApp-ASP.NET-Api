@@ -13,12 +13,18 @@ namespace Ecommerce.Api.Controllers
     public class ProductsController : AppController
     {
 
-        [HttpGet(Routre.StudentRouting.List)]
+        [HttpGet(Routre.StudentRouting.PaginatedList)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProductList()
+        public async Task<IActionResult> GetProductList(
+        [FromQuery] int PageNumber,
+        [FromQuery] int PageSize,
+        [FromQuery] string Filters,
+        [FromQuery] string Sotrs
+        )
         {
-            var response = await Mediator.Send(new GetProductListQuery());
+
+            var response = await Mediator.Send(new GetPaginatedProductListQuery(Sotrs, Filters, PageNumber, PageSize));
 
             return NewResult(response);
         }

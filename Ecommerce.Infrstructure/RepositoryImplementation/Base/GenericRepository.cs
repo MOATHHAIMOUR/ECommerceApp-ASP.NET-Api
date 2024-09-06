@@ -2,7 +2,6 @@
 using Ecommerce.Infrstructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Linq.Expressions;
 
 
 namespace Ecommerce.Infrastructure.Repos.Base
@@ -16,17 +15,9 @@ namespace Ecommerce.Infrastructure.Repos.Base
             _dbContext = context;
         }
 
-        public IQueryable<TEntity> GetTableNoTracking(params Expression<Func<TEntity, object>>[] Includes)
+        public IQueryable<TEntity> GetTableNoTracking()
         {
-            IQueryable<TEntity> query = _dbContext.Set<TEntity>().AsNoTracking().AsQueryable();
-
-
-            foreach (var include in Includes)
-            {
-                query = query.Include(include);
-            }
-
-            return query;
+            return _dbContext.Set<TEntity>().AsNoTracking().AsQueryable();
         }
 
         public IQueryable<TEntity> GetTableAsTracking()

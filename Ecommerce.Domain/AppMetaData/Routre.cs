@@ -9,7 +9,9 @@
 
         public static class CrudOpreations
         {
-            public const string GetList = "Create";
+            public const string GetPaginatedList = "PaginatedList";
+
+            public const string GetList = "List";
 
             public const string GetById = "{Id}";
 
@@ -25,6 +27,8 @@
         {
             public const string prefix = rule + "Product/";
 
+
+            public const string PaginatedList = prefix + CrudOpreations.GetPaginatedList;
 
             public const string List = prefix + CrudOpreations.GetList;
 
