@@ -1,5 +1,7 @@
-﻿using FluentValidation;
+﻿using Ecommerce.Application.Common.Resources;
+using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace Ecommerce.Application.Common.Behavioures
 {
@@ -7,12 +9,14 @@ namespace Ecommerce.Application.Common.Behavioures
         where TRequest : IRequest<TResponse>
     {
 
+        private readonly IStringLocalizer<SharedResources> _localizer;
         private readonly IEnumerable<IValidator<TRequest>> _validators;
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+
+        public ValidationBehavior(IStringLocalizer<SharedResources> localizer, IEnumerable<IValidator<TRequest>> validators)
         {
+            _localizer = localizer;
             _validators = validators;
         }
-
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
@@ -24,7 +28,7 @@ namespace Ecommerce.Application.Common.Behavioures
 
                 if (failures.Count != 0)
                 {
-                    var message = failures.Select(x => x.ErrorMessage).FirstOrDefault();
+                    var message = failures.Select(x => _localizer[$"{x.PropertyName}"] + " :" + x.ErrorMessage).FirstOrDefault();
 
                     throw new ValidationException(message);
 

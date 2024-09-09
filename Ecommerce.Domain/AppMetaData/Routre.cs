@@ -22,6 +22,14 @@
             public const string Delete = "Delete";
         }
 
+        public static class UserRouting
+        {
+            public const string prefix = rule + "User/";
+
+            public const string Create = prefix + CrudOpreations.Create;
+
+        }
+
 
         public static class StudentRouting
         {

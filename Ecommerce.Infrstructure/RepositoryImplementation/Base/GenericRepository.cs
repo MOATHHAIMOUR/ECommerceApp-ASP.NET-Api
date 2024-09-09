@@ -26,7 +26,7 @@ namespace Ecommerce.Infrastructure.Repos.Base
 
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
@@ -64,9 +64,6 @@ namespace Ecommerce.Infrastructure.Repos.Base
             _dbContext.Set<TEntity>().UpdateRange(entities);
             await _dbContext.SaveChangesAsync();
         }
-
-
-
 
         public virtual async Task DeleteRangeAsync(ICollection<TEntity> entities)
         {

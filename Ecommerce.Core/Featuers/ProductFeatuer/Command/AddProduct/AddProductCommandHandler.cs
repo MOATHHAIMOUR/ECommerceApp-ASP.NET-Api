@@ -6,12 +6,12 @@ using MediatR;
 
 namespace Ecommerce.Application.Featuers.ProductFeatuer.Command.AddProduct
 {
-    internal class AddProductHandler : ResponseHandler, IRequestHandler<AddProductCommand, Response<object>>
+    internal class AddProductCommandHandler : ResponseHandler, IRequestHandler<AddProductCommand, Response<object>>
     {
         private readonly IProductServices _productServices;
         private readonly IMapper _mapper;
 
-        public AddProductHandler(IProductServices productServices, IMapper mapper)
+        public AddProductCommandHandler(IProductServices productServices, IMapper mapper)
         {
             _productServices = productServices;
             _mapper = mapper;

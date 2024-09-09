@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Application.Common.Behavioures;
 using Ecommerce.Application.Services.ProductServices;
+using Ecommerce.Application.Services.UserServices;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,13 +18,17 @@ namespace Ecommerce.Domain
             // Configuration for AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            // Configuration Services
-            services.AddScoped<IProductServices, ProductServices>();
-
             // Get Validators
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+            //
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+
+
+            // Configuration Services
+            services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<IUserServices, UserServices>();
 
 
             return services;

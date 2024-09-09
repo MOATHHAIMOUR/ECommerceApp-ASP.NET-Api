@@ -15,7 +15,7 @@ namespace Ecommerce.Application.Common.Extentions
 
                 return false;
 
-            }).WithMessage("{PropertyName} must be null or empty.");
+            });
         }
 
 
@@ -28,7 +28,7 @@ namespace Ecommerce.Application.Common.Extentions
             {
                 return str.Length >= smallVal && str.Length <= largeVal;
 
-            }).WithMessage("{PropertyName} must be between " + smallVal + " and " + largeVal + " characters long.");
+            });
 
         }
 
@@ -43,7 +43,7 @@ namespace Ecommerce.Application.Common.Extentions
             {
                 return num.CompareTo(smallVal) >= 0 && num.CompareTo(largeVal) <= 0;
 
-            }).WithMessage("{PropertyName} must be between " + smallVal + " and " + largeVal + " Range.");
+            });
 
         }
 
