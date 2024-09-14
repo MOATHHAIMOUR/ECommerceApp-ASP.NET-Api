@@ -43,6 +43,7 @@ namespace Ecommerce.Infrstructure
                  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                  option.User.RequireUniqueEmail = true;
 
+
                  option.SignIn.RequireConfirmedEmail = false;
 
              })

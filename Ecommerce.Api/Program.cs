@@ -7,16 +7,18 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 //Configuer Infrastrucuer Layer  
 builder.Services.InfrastructureConfiguration(builder.Configuration);
 
 //Configuer Application Layer  
-builder.Services.RegisterApplicationDependencies();
+builder.Services.RegisterApplicationDependencies(builder.Configuration);
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddControllers();
 
 // Configure logging
@@ -49,7 +51,6 @@ builder.Services.AddLocalization(options =>
 {
     options.ResourcesPath = "";
 });
-
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
@@ -65,6 +66,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider()); // Add QueryStringProvider for Culture switching
 
 });
+
+
+
 
 
 var app = builder.Build();

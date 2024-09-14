@@ -1,4 +1,4 @@
-﻿using Ecommerce.Application.Common.BaseResponse;
+﻿using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -88,8 +88,6 @@ namespace Ecommerce.Api.Middleware
                     responseModel.StatusCode = HttpStatusCode.InternalServerError;
                     response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
-
-
             }
 
             var result = JsonSerializer.Serialize(responseModel);

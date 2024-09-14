@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Ecommerce.Application.Common.BaseResponse;
+using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using Ecommerce.Application.Common.Resources;
 using Ecommerce.Application.Services.UserServices;
 using Ecommerce.Domain.Entites;
@@ -30,16 +30,12 @@ namespace Ecommerce.Application.Featuers.UserFeatuer.Command.AddUser
 
             User user = _mapper.Map<User>(request);
 
-            IdentityResult result = await _userServices.AddNewUser(user);
+            IdentityResult result = await _userServices.AddNewUser(user, request.Password);
 
             if (result.Succeeded)
-            {
                 return Created<object>(user.Id, "User Created Succsessfully");
-            }
             else
-            {
-                return BadRequest<object>(result.Errors.ToString());
-            }
+                return BadRequest<object>(string.Join(',', result.Errors.Select(e => e.Description).ToList()));
         }
     }
 }

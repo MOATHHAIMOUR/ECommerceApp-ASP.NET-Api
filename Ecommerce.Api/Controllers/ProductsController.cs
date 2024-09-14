@@ -1,4 +1,4 @@
-﻿using Ecommerce.Api.Base;
+﻿using Ecommerce.Api.Controllers.Base;
 using Ecommerce.Application.Featuers.ProductFeatuer.Command.AddProduct;
 using Ecommerce.Application.Featuers.ProductFeatuer.Command.DeleteProductById;
 using Ecommerce.Application.Featuers.ProductFeatuer.Command.UpdateProductById;

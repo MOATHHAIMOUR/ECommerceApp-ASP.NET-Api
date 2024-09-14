@@ -1,4 +1,4 @@
-﻿using Ecommerce.Application.Common.BaseResponse;
+﻿using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 

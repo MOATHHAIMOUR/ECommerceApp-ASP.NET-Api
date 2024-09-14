@@ -22,12 +22,30 @@
             public const string Delete = "Delete";
         }
 
+        public static class AuthRouting
+        {
+            public const string prefix = rule + "Auth/";
+
+            public const string SignIn = prefix + "SignIn";
+        }
+
         public static class UserRouting
         {
             public const string prefix = rule + "User/";
 
+            public const string PaginatedList = prefix + CrudOpreations.GetPaginatedList;
+
+            public const string List = prefix + CrudOpreations.GetList;
+
+            public const string GetById = prefix + CrudOpreations.GetById;
+
             public const string Create = prefix + CrudOpreations.Create;
 
+            public const string Update = prefix + CrudOpreations.Update;
+
+            public const string Delete = prefix + CrudOpreations.Delete + "/" + CrudOpreations.GetById;
+
+            public const string ChangePassword = prefix + "ChangePassword";
         }
 
 

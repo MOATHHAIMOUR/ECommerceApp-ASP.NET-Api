@@ -1,9 +1,9 @@
-﻿using Ecommerce.Application.Common.BaseResponse;
+﻿using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace Ecommerce.Api.Base
+namespace Ecommerce.Api.Controllers.Base
 {
     [ApiController]
     public class AppController : ControllerBase

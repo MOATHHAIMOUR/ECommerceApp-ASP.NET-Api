@@ -1,13 +1,13 @@
 ﻿using Ecommerce.Application.Common.BaseResponse;
+using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using Ecommerce.Application.Common.Helpers;
-using Ecommerce.Application.Common.pagination;
 using MediatR;
 
 namespace Ecommerce.Application.Featuers.UserFeatuer.Queries.GetPaginatedUserList
 {
     public class GetPaginatedUserListQuery : IRequest<Response<PaginatedResult<UserDTO>>>
     {
-        public Dictionary<string, string> SotrsDic { set; get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> SotrsDic { set; get; }
         public Dictionary<string, string> FiltersDic { set; get; }
 
         public int PageNumber { get; set; }
@@ -17,8 +17,12 @@ namespace Ecommerce.Application.Featuers.UserFeatuer.Queries.GetPaginatedUserLis
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
-            SotrsDic = Helpers.ConstructDic(Sorts);
-            FiltersDic = Helpers.ConstructDic(filters);
+
+            if (!string.IsNullOrEmpty(filters))
+                FiltersDic = UtilityHelper.ConstructDic(filters);
+
+            if (!string.IsNullOrEmpty(Sorts))
+                SotrsDic = UtilityHelper.ConstructDic(Sorts);
         }
     }
 }

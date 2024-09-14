@@ -41,14 +41,14 @@ namespace Ecommerce.Application.Featuers.UserFeatuer.Command.AddUser
                 .NotNullOrEmpty()
                 .WithMessage(_localization[SharedResourcesKeys.Requierd]);
 
-            RuleFor(p => p.Passworde)
+            RuleFor(p => p.Password)
                 .NotNullOrEmpty()
                 .WithMessage(_localization[SharedResourcesKeys.Requierd]);
 
             RuleFor(p => p.ConfirmPassword)
                 .NotNullOrEmpty()
                 .WithMessage(_localization[SharedResourcesKeys.Requierd])
-                .Equal(p => p.Passworde)
+                .Equal(p => p.Password)
                 .WithMessage(_localization[SharedResourcesKeys.Not_Equal_password_Confirm_Password]);
         }
     }

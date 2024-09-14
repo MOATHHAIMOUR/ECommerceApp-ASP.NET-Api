@@ -1,12 +1,7 @@
-﻿namespace Ecommerce.Application.Common.BaseResponse
+﻿namespace Ecommerce.Application.Common.BaseResponse.GenericApiResponse
 {
     public class ResponseHandler
     {
-        public ResponseHandler()
-        {
-
-        }
-
         public Response<T> Deleted<T>()
         {
             return new Response<T>()
@@ -49,13 +44,13 @@
             };
         }
 
-        public Response<T> Unauthorized<T>()
+        public Response<T> Unauthorized<T>(string message)
         {
             return new Response<T>()
             {
                 StatusCode = System.Net.HttpStatusCode.Unauthorized,
                 Succeeded = true,
-                Message = "UnAuthorized"
+                Message = string.IsNullOrEmpty(message) ? "UnAuthorized" : message
             };
         }
 

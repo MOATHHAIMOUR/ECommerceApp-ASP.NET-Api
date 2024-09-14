@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Common.BaseResponse;
+using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using Ecommerce.Application.Common.Helpers;
-using Ecommerce.Application.Common.pagination;
 using Ecommerce.Application.Featuers.ProductFeatuer.Queries;
 using MediatR;
 
@@ -21,8 +21,8 @@ namespace Ecommerce.Domain.Featuers.ProductFeatuer.Queries.GetProductList
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
-            SotrsDic = Helpers.ConstructDic(sotrs);
-            FiltersDic = Helpers.ConstructDic(filters);
+            SotrsDic = UtilityHelper.ConstructDic(sotrs);
+            FiltersDic = UtilityHelper.ConstructDic(filters);
         }
     }
 }
