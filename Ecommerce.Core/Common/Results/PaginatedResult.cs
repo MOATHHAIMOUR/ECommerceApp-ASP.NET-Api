@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Application.Common.BaseResponse
+﻿namespace Ecommerce.Application.Common.Results
 {
     public class PaginatedResult<T>
     {

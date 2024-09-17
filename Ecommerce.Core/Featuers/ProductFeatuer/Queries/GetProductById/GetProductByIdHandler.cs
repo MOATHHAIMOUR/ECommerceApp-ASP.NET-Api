@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
+using Ecommerce.Application.Common.BaseResponse;
 using Ecommerce.Application.Common.Resources;
 using Ecommerce.Application.Services.ProductServices;
 using MediatR;

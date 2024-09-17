@@ -1,7 +1,8 @@
-﻿using Ecommerce.Domain.Entites;
+﻿using Ecommerce.Domain.Entites.Identity;
 using Ecommerce.Domain.IRepositories;
 using Ecommerce.Domain.IRepositories.Base;
 using Ecommerce.Infrastructure.Repos.Base;
+using Ecommerce.Infrastructure.RepositoryImplementation;
 using Ecommerce.Infrstructure.Data;
 using Ecommerce.Infrstructure.RepositroryImplemntation;
 using Microsoft.AspNetCore.Identity;
@@ -50,10 +51,11 @@ namespace Ecommerce.Infrstructure
                  .AddEntityFrameworkStores<AppDbContext>()
                  .AddDefaultTokenProviders();
 
+
+            // Repos Config
             services.AddScoped(typeof(IGeneericRepoositry<>), typeof(GenericRepository<>));
-
             services.AddScoped(typeof(IProductrRepository), typeof(ProductRepository));
-
+            services.AddScoped(typeof(IRefreshTokenRepository), typeof(RefreshTokenRepository));
             return services;
         }
     }

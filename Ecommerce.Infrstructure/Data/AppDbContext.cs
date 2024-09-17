@@ -1,4 +1,6 @@
-﻿using Ecommerce.Domain.Entites;
+﻿using Ecommerce.Application.Common.Results;
+using Ecommerce.Domain.Entites;
+using Ecommerce.Domain.Entites.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ namespace Ecommerce.Infrstructure.Data
 
         public  DbSet<Product> Products { get; set; }
 
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

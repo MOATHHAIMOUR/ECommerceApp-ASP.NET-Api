@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Common.BaseResponse;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using Ecommerce.Application.Common.Helpers;
+using Ecommerce.Application.Common.Results;
 using Ecommerce.Application.Featuers.ProductFeatuer.Queries;
 using MediatR;
 

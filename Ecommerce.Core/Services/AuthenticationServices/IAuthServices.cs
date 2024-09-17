@@ -1,4 +1,5 @@
-﻿using Ecommerce.Domain.Entites;
+﻿using Ecommerce.Application.Common.Results;
+using Ecommerce.Domain.Entites.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Ecommerce.Application.Services.AuthenticationServices
@@ -9,6 +10,6 @@ namespace Ecommerce.Application.Services.AuthenticationServices
 
         public string GenerateJWTToken(User user);
 
-
+        public RefreshToken GenerateRefreshToken(User user);
     }
 }

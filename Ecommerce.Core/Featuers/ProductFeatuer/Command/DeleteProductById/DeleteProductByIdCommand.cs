@@ -1,4 +1,4 @@
-﻿using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
+﻿using Ecommerce.Application.Common.BaseResponse;
 using MediatR;
 
 namespace Ecommerce.Application.Featuers.ProductFeatuer.Command.DeleteProductById

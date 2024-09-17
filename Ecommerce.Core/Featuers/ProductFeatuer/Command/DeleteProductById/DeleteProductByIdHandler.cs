@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
+using Ecommerce.Application.Common.BaseResponse;
 using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.Domain.Entites;
 using MediatR;

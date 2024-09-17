@@ -1,6 +1,6 @@
 ﻿using Ecommerce.Application.Common.BaseResponse;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using Ecommerce.Application.Common.Helpers;
+using Ecommerce.Application.Common.Results;
 using MediatR;
 
 namespace Ecommerce.Application.Featuers.UserFeatuer.Queries.GetPaginatedUserList

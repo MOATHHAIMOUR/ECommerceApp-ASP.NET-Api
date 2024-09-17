@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Ecommerce.Domain.Entites;
+using Ecommerce.Domain.Entites.Identity;
 
 namespace Ecommerce.Application.Featuers.UserFeatuer.Queries
 {

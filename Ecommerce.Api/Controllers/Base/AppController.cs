@@ -1,4 +1,4 @@
-﻿using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
+﻿using Ecommerce.Application.Common.BaseResponse;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

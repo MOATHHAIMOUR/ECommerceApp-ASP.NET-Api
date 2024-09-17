@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Ecommerce.Application.Common.BaseResponse.GenericApiResponse
+namespace Ecommerce.Application.Common.BaseResponse
 {
     public class Response<T>
     {

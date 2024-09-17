@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
-using Ecommerce.Domain.Entites;
+using Ecommerce.Application.Common.BaseResponse;
+using Ecommerce.Domain.Entites.Identity;
 using MediatR;
 
 namespace Ecommerce.Application.Featuers.UserFeatuer.Command.AddUser

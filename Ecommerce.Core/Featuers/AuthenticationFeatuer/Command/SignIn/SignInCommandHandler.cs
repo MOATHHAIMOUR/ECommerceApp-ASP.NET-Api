@@ -1,8 +1,8 @@
 ﻿using Ecommerce.Application.Common.BaseResponse;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
+using Ecommerce.Application.Common.Results;
 using Ecommerce.Application.Services.AuthenticationServices;
 using Ecommerce.Application.Services.UserServices;
-using Ecommerce.Domain.Entites;
+using Ecommerce.Domain.Entites.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -36,15 +36,13 @@ namespace Ecommerce.Application.Featuers.AuthenticationFeatuer.Command.SignIn
 
             string token = _authenticationServices.GenerateJWTToken(user);
 
-            return Success<AuthenticatedResult>(
-                Meta: new AuthenticatedResult()
-                {
-                    UserId = user.Id.ToString(),
-                    FullName = user.FullName,
-                    Token = token,
-                    TokenType = "Bearer",
-                    Username = user.UserName,
 
+
+            return Success(
+                new AuthenticatedResult()
+                {
+                    AccessToken = token,
+                    Username = user.UserName,
 
                 },
                 message: "User Authenticated Succsessfully"

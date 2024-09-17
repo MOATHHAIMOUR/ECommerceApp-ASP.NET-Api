@@ -5,10 +5,12 @@ using Ecommerce.Application.Featuers.ProductFeatuer.Command.UpdateProductById;
 using Ecommerce.Application.Featuers.ProductFeatuer.Queries.GetProductById;
 using Ecommerce.Domain.AppMetaData;
 using Ecommerce.Domain.Featuers.ProductFeatuer.Queries.GetProductList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     public class ProductsController : AppController
     {

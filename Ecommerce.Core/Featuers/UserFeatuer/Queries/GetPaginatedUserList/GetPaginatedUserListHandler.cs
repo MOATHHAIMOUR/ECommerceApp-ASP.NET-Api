@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Ecommerce.Application.Common.BaseResponse;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
 using Ecommerce.Application.Common.Extentions;
+using Ecommerce.Application.Common.Results;
 using Ecommerce.Application.Services.UserServices;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

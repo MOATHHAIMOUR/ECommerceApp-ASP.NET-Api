@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Ecommerce.Application.Common.BaseResponse.GenericApiResponse;
+using Ecommerce.Application.Common.BaseResponse;
 using Ecommerce.Application.Services.UserServices;
-using Ecommerce.Domain.Entites;
+using Ecommerce.Domain.Entites.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
